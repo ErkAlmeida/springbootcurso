@@ -3,8 +3,10 @@ package com.erickalmeida.curso.config;
 import java.time.Instant;
 import java.util.Arrays;
 
+import com.erickalmeida.curso.entities.Category;
 import com.erickalmeida.curso.entities.Order;
 import com.erickalmeida.curso.entities.enums.OrderStatus;
+import com.erickalmeida.curso.repositories.CategoryRepository;
 import com.erickalmeida.curso.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -24,8 +26,17 @@ public class TestConfig implements CommandLineRunner {
 	@Autowired
 	private OrderRepository orderRepository;
 
+	@Autowired
+	private CategoryRepository categoryRepository;
+
 	@Override
 	public void run(String... args) throws Exception {
+
+		Category cat1 = new Category(null,"Eletronicos");
+		Category cat2 = new Category(null,"Livros");
+		Category cat3 = new Category(null,"Computadores");
+
+		categoryRepository.saveAll(Arrays.asList(cat1,cat2,cat3));
 		
 		User u1 = new User(null, "Erick","erickprofissional@gmail.com","11984466670","123456");
 		User u2 = new User(null, "Celia","celia@gmail.com","1123445","654321");
