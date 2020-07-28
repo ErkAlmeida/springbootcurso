@@ -1,5 +1,6 @@
 package com.erickalmeida.curso.entities;
 
+import com.erickalmeida.curso.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,20 +21,24 @@ public class Order implements Serializable {
     private Long id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private Instant date;
+    private Instant moment;
 
+    private Integer orderStatus;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name ="client_id")
     private User client;
 
+
+
     public Order(){
 
     }
 
-    public Order(Long id, Instant date, User client) {
+    public Order(Long id, Instant date, OrderStatus orderStatus, User client) {
         this.id = id;
-        this.date = date;
+        this.moment = date;
+        setOrderStatus(orderStatus);
         this.client = client;
     }
 
@@ -46,11 +51,21 @@ public class Order implements Serializable {
     }
 
     public Instant getDate() {
-        return date;
+        return moment;
     }
 
     public void setDate(Instant date) {
-        this.date = date;
+        this.moment = date;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if(orderStatus != null) {
+            this.orderStatus = orderStatus.getCode();
+        }
     }
 
     public User getClient() {
@@ -60,6 +75,8 @@ public class Order implements Serializable {
     public void setClient(User client) {
         this.client = client;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
