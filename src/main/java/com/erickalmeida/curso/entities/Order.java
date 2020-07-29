@@ -28,11 +28,7 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name ="client_id")
     private User client;
-
-
-
     public Order(){
-
     }
 
     public Order(Long id, Instant date, OrderStatus orderStatus, User client) {
